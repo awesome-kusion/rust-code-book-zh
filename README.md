@@ -1,5 +1,7 @@
 # Rust源码剖析
 
+[English](https://github.com/awesome-kusion/rust-code-book) [简体中文](https://github.com/awesome-kusion/rust-code-book-zh)
+
 引个流先：
 
 - *KusionStack一站式可编程配置技术栈(Go实现): <https://github.com/KusionStack/kusion>*

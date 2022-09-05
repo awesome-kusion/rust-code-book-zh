@@ -1,6 +1,5 @@
 # 目录
 
-[Rust 源码剖析](index.md)
 [序言](preface.md)
 
 - [简介](intro/readme.md)
@@ -19,7 +18,7 @@
       <!-- - [Lint 与 LintPass](rustc/sema/lint/lint-pass.md)
       - [CombinedLintPass](rustc/sema/lint/combinedlintpass.md)
       - [Lint 执行流程[WIP]](rustc/sema/lint/lint.md) -->
-    - [Resolver](rustc/sema/resovler/readme.md)
+    <!-- - [Resolver](rustc/sema/resovler/readme.md)
     - [HIR lowering](rustc/sema/hir-lowering/readme.md)
       - [类型推导](rustc/sema/hir-lowering/type-inference/readme.md)
       - [Trait solving](rustc/sema/hir-lowering/trait-solving/readme.md)
@@ -27,21 +26,17 @@
       - [LateLint](rustc/sema/late-lint/readme.md)
     - [MIR lowering](rustc/sema/mir-lowering/readme.md)
       - [Borrow checking](rustc/sema/mir-lowering/borrow-check/readme.md)
-      - [MIR 优化](rustc/sema/mir-lowering/mir-optimized/readme.md)
+      - [MIR 优化](rustc/sema/mir-lowering/mir-optimized/readme.md) -->
   - [代码生成](rustc/codegen/readme.md)
   - [通用结构](rustc/general/readme.md)
     - [错误系统[WIP]](rustc/general/errors/readme.md)
     - [SourceMap & Span[WIP]](rustc/general/sourcemap-span/readme.md)
 
 - [Rust外围工具](rust-tools/readme.md)
-  - [Cargo包管理](rust-tools/cargo/readme.md)
-  - [WASM包管理](rust-tools/wasm/readme.md)
-  - [Clippy](rust-tools/clippy/readme.md)
+  <!-- - [Cargo包管理](rust-tools/cargo/readme.md)
+  - [Clippy](rust-tools/clippy/readme.md) -->
 
 - [Rust开源项目](open-source/readme.md)
   - [KCLVM](open-source/KCLVM/readme.md)
-    - [KCL](open-source/KCLVM/KCL.md)
-    - [KCLVM dev guide](open-source/KCLVM/dev-guide/readme.md)
-      - [quick start](open-source/KCLVM/dev-guide/quick_start.md)
 
 - [附录](appendix/readme.md)
