@@ -15,6 +15,6 @@ build-dir = "docs"
 [output.html]
 additional-css = ["style.css"]
 additional-js = ["js/custom.js", "js/bigPicture.js"]
-git-repository-url = "https://github.com/awesome-kusion/rust-code-book"
-edit-url-template = "https://github.com/awesome-kusion/rust-code-book/edit/main/{path}"
+git-repository-url = "https://github.com/awesome-kusion/rust-code-book-zh"
+edit-url-template = "https://github.com/awesome-kusion/rust-code-book-zh/edit/main/{path}"
 git-repository-icon = "fa-github"
