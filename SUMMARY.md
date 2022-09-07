@@ -29,7 +29,7 @@
       - [MIR 优化](rustc/sema/mir-lowering/mir-optimized/readme.md) -->
   - [代码生成](rustc/codegen/readme.md)
   - [通用结构](rustc/general/readme.md)
-    - [错误系统[WIP]](rustc/general/errors/readme.md)
+    - [Rust 错误信息输出原理概述](rustc/general/errors/readme.md)
     - [SourceMap & Span[WIP]](rustc/general/sourcemap-span/readme.md)
 
 - [Rust外围工具](rust-tools/readme.md)

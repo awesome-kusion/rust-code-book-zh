@@ -1,4 +1,4 @@
-# Rust 的错误信息输出原理
+# Rust 的错误信息输出原理概述
 
 ## 1. 背景
 
@@ -14,7 +14,7 @@
 
 首先，看源码之前，先看看 Rust 的诊断信息的格式。如下图所示：
 
-![image.png](./images/error-01.png)
+![](./images/error-01.png)
 
 根据 Rustc 文档中的描述，上述信息可以分为下面5个部分，
 
@@ -38,7 +38,7 @@
 
 直接看上面这两点不太好理解，主要的流程可以参考下面这张图，
 
-![Screen Shot 2022-09-02 at 11.51.26.png](./images/error-02.png)
+![](./images/error-02.png)
 
 其中，黄色部分表示在 Rustc 的不同模块中，定义各自的错误/警告等异常类型的结构体 Struct  (**注：枚举也可以，本文是一个概述，为了方便描述所以下面就只列Struct了**)。绿色部分表示在Rustc的错误处理模块提供了一个 trait SessionDiagnostic。不同模块内部定义的 Struct 实现这个 trait SessionDiagnostic。trait SessionDiagnostic 的具体实现就是将 Struct 中输出诊断信息需要的内容抽取出来封装好，返回给 Rustc 的错误处理模块用来输出。
 
@@ -119,7 +119,7 @@ tcx.sess.emit_err(FieldAlreadyDeclared {
 
 不太明白，但是得到了一个关键方法 emit_err() ，通过这个方法将错误的诊断信息输出到终端，那就在源码里全局搜索一下这个方法：
 
-![Screen Shot 2022-09-02 at 12.03.22.png](./images/error-03.png)
+![](./images/error-03.png)
 
 找到了这个方法的定义如下：
 
@@ -168,7 +168,7 @@ impl DiagnosticBuilder {
 
 看代码好像明白了，把上面错误处理过程的图细化一下：
 
-![Screen Shot 2022-09-02 at 14.19.23.png](./images/error-05.png)
+![](./images/error-05.png)
 
 如图所示，我在图的右面增加了一些东西，黄色的部分没有太大的变化，Rustc 其他的模块定义错误的 Struct，绿色的部分增加了一些内容，细化了 trait SessionDiagnostic 的主要实现，根据黄色的 Struct 提供的内容生成蓝色的 DiagnosticBuilder。生成的 DiagnosticBuilder 中，内置 emit() 方法用来将诊断信息输出到终端，这个 emit() 方法最后会在 Session 中被调用。
 
@@ -180,16 +180,16 @@ impl DiagnosticBuilder {
 
 可以看到，在Rustc中很多地方都通过 Session 输出错误信息。
 
-![Screen Shot 2022-09-02 at 14.37.01.png](./images/error-04.png)
+![](./images/error-04.png)
 
 我看了一下，挑了几个其中比较典型，见名知意的地方。首先是在 Ructc 的语法解析器 rustc_parse 中，在进行语法分析的过程中遇到错误，会通过 sess.emit_err() 方法输出错误的诊断信息。
 
-![Screen Shot 2022-09-02 at 14.38.27.png](./images/error-06.png)
+![](./images/error-06.png)
 
 然后，在 rustc 的类型检查器 TypeChecker 中，所有权借用检查 rustc_borrowck 部分和类型检查部分 rustc_typeck 在检查到错误时会通过 sess.emit_err() 方法输出错误的诊断信息。与 rustc_parse 不同的是 TypeChecker 并不直接将 Session 实例作为结构体成员而是通过一个获取上下文的方法 tcx() 获取 Session 实例。
 
-![Screen Shot 2022-09-02 at 14.38.06.png](./images/error-07.png)
-![Screen Shot 2022-09-02 at 14.38.48.png](./images/error-08.png)
+![](./images/error-07.png)
+![](./images/error-08.png)
 
 这个上下文方法 tcx() 的细节以及上下文的结构也是暂不深究，目前我们只需要知道 TypeChecker 也是通过 Session 输出诊断信息的就够了。然后，我们来浅看一下他们是如何借助 Session 输出错误的信息的。
 
@@ -207,7 +207,7 @@ self.sess.emit_err(...)
 
 见名知意给我带来了一点误判， Parser 内置的是 ParseSess 而不是 Session。所以，可以借助上面那个图的结构，给 Parser 错误处理的局部也单独画一张图。
 
-![Screen Shot 2022-09-02 at 15.08.25.png](./images/error-09.png)
+![](./images/error-09.png)
 
 之前的图中已经展示了内部的细节，这里就不展示了，这里只展示 trait SessionDiagnostic 和 Parser 之间的关系，(**注：上图中的 Parse() 方法是我起的名字，指的是 Rustc中 对 Rust 程序语法分析的过程，在 Rustc 源程序中这个方法并不一定存在，具体用的是什么方法不是本文的重点，但是只要是编译器就一定有 parse 过程，在不同的编译器中 parse 过程的名字可能不同。**)
 
@@ -245,7 +245,7 @@ pub struct GlobalCtxt {
 
 藏的够深的，不过好在我们还是把它挖了出来，目前聚焦于错误处理，所以暂时不用关心这些上下文结构 (XXXCtxt) 都是什么意思。
 
-![Screen Shot 2022-09-02 at 15.24.03.png](./images/error-10.png)
+![](./images/error-10.png)
 
 如上图所示，与 Parser 的部分同理，ty_check() 是我自己写的方法，代指 TypeChecker 对 Rust 程序进行类型检查的过程，目前聚焦于错误处理，所以 InferCtxt，TyCtxt 和 GlobalCtxt 等上下文结构我就缩写为 XXXCtx 了，可以看到，这个过程和 Parser 错误处理的过程是一样的，在类型检查的过程中出现错误，就实例化一个实现了 trait SessionDiagnostic 的结构，并把它抛给 TypeChecker 内置的各种上下文中内置的 Session 中的 emit_err() 方法将诊断信息输出。
 
@@ -370,14 +370,14 @@ pub struct Handler {
 
 到 Handler 这里，看看注释，我觉得可以了，我们知道了所有错误的诊断信息，最后都通过 Handler 输出到终端，到这里，可以再把上面的图细化一下：
 
-![Screen Shot 2022-09-02 at 16.56.19.png](./images/error-11.png)
+![](./images/error-11.png)
 
 如图所示，我们在图中将 DiagnosticBuilder 内部的一点点细节画进去了，先不考虑 EmissionGuarantee。 DiagnosticBuilder 中包含输出诊断信息的 Handler 和保存诊断信息内容的 Diagnostic ，在 Session 和 ParseSess 中，会先调用 SessionDiagnostic 的 into_diagnostic() 方法，获得 DiagnosticBuilder，然后调用 DiagnoaticBuilder 的 emit() 方法输出诊断信息，在 emit() 方法中，会调用 DiagnoaticBuilder 内置的 Handler 并将 DiagnoaticBuilder 中的  Diagnostic 输出到终端。
 
 ## 总结
 在本文中我们只涉猎了 Rustc 中错误处理模块很小的一部分，通过这一部分的浅看，我们大概的了解了一下 Rustc 中错误从出现到变成诊断信息输出到终端的整个流程。最后以上文中提到的 rustc_parser 和 rustc_type_checker 为例，一张图收尾。
 
-![Screen Shot 2022-09-02 at 17.17.33.png](./images/error-12.png)
+![](./images/error-12.png)
 
 Rustc 错误处理模块的三部分: 
 
@@ -387,7 +387,7 @@ Rustc 错误处理模块的三部分:
 
 如果还是有一点绕晕了，在上面这个图上再加一笔，通过红色的尖头我们可以看到 Rust 中的一个异常包含的信息的从发生错误的地方到开发者面前的主要流向：
 
-![Screen Shot 2022-09-05 at 10.18.39.png](./images/error-13.png)
+![](./images/error-13.png)
 
 从上图右面的部分可以看到，错误信息并不是直接从 DiagnosticBuilder 中发送到开发者面前的，而是先从 Session 兜了个圈子，那为什么要这么做呢？这里先刨个坑，后续我们将进一步深入到 Rustc 的源码当中去，详细剖析解读一下各部分的源码结构并且理解一下 Rustc 的开发者增加各个部分的动机。
 
