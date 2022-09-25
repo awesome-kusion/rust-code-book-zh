@@ -163,11 +163,11 @@ where
 
 刚刚的例子中，栈 `runs` 中只有一个段 `[0, 1, 3(1), 3(2), 7]`，显然不能合并，因此重复步骤 1 和步骤 2，在 `runs` 中添加第二个段，使其变为 `[[0, 1, 3(1), 3(2), 7], [4, 5, 6]]`(用 `[]` 表示一个段)。此时 `collapse` 会返回下标 `0`，然后使用归并合并 `[0, 1, 3(1), 3(2), 7]` 和 `[4, 5, 6]`。得到结果 `[0, 1, 3(1), 3(2), 4, 5, 6, 7]`，完成整个遍历。
 
-### 与 Timsort 算法的区别
+### Timsort 算法的 bug
 
 Rust 中的实现并非默认的 Timsort 的算法，这是因为 Timsort 算法存在 bug(http://envisage-project.eu/timsort-specification-and-verification/)。Rust 的实现在 `collapse` 这个函数做了修改。
 
-可以比较 Java JDK1.8中对应的实现。Java的实现中只比较了栈顶3个元素，但 Rust 的现实比较了栈顶 4 个元素。
+Timsort 算法在 JDK1.7 中引入 Java，但在 1.8 版本仍未修复这个 bug。 比较 Java JDK1.8中对应的实现。Java的实现中只比较了栈顶3个元素，但 Rust 的现实比较了栈顶 4 个元素。
 
 ```java
 private void mergeCollapse() {
@@ -215,4 +215,4 @@ todo
 Timsort: https://github.com/python/cpython/blob/main/Objects/listsort.txt
 OpenJDK’s java.utils.Collection.sort() is broken: The good, the bad and the worst case: http://envisage-project.eu/timsort-specification-and-verification/
 Proving that Android’s, Java’s and Python’s sorting algorithm is broken (and showing how to fix it): http://www.envisage-project.eu/proving-android-java-and-python-sorting-algorithm-is-broken-and-how-to-fix-it/
-java bug track: https://bugs.openjdk.org/browse/JDK-8072909
+Java bug track: https://bugs.openjdk.org/browse/JDK-8072909
