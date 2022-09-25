@@ -212,7 +212,7 @@ private void mergeCollapse() {
 todo
 
 ## Ref
-Timsort: https://github.com/python/cpython/blob/main/Objects/listsort.txt
-OpenJDK’s java.utils.Collection.sort() is broken: The good, the bad and the worst case: http://envisage-project.eu/timsort-specification-and-verification/
-Proving that Android’s, Java’s and Python’s sorting algorithm is broken (and showing how to fix it): http://www.envisage-project.eu/proving-android-java-and-python-sorting-algorithm-is-broken-and-how-to-fix-it/
-Java bug track: https://bugs.openjdk.org/browse/JDK-8072909
+Timsort: <https://github.com/python/cpython/blob/main/Objects/listsort.txt>
+OpenJDK’s java.utils.Collection.sort() is broken: The good, the bad and the worst case: <http://envisage-project.eu/timsort-specification-and-verification/>
+Proving that Android’s, Java’s and Python’s sorting algorithm is broken (and showing how to fix it): <http://www.envisage-project.eu/proving-android-java-and-python-sorting-algorithm-is-broken-and-how-to-fix-it/>
+Java bug track: <https://bugs.openjdk.org/browse/JDK-8072909>
