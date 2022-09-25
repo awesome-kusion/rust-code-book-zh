@@ -312,9 +312,9 @@ where
 <p>首先看 <code>collapse</code> 函数。这里用 <code>collapse</code> 判断是否有能够合并的段，如果有，则返回其下标 <code>r</code>，如果没有，则返回 <code>None</code>。具体判断的逻辑稍后说明。</p>
 <p>步骤3中根据 <code>collapse</code> 函数的返回结果，使用归并排序合并 <code>runs[r]</code>和 <code>runs[r + 1]</code>，或者重复步骤 1 和步骤 2，继续在栈 <code>runs</code> 中构建新的段。</p>
 <p>刚刚的例子中，栈 <code>runs</code> 中只有一个段 <code>[0, 1, 3(1), 3(2), 7]</code>，显然不能合并，因此重复步骤 1 和步骤 2，在 <code>runs</code> 中添加第二个段，使其变为 <code>[[0, 1, 3(1), 3(2), 7], [4, 5, 6]]</code>(用 <code>[]</code> 表示一个段)。此时 <code>collapse</code> 会返回下标 <code>0</code>，然后使用归并合并 <code>[0, 1, 3(1), 3(2), 7]</code> 和 <code>[4, 5, 6]</code>。得到结果 <code>[0, 1, 3(1), 3(2), 4, 5, 6, 7]</code>，完成整个遍历。</p>
-<h3 id="与-timsort-算法的区别"><a class="header" href="#与-timsort-算法的区别">与 Timsort 算法的区别</a></h3>
+<h3 id="timsort-算法的-bug"><a class="header" href="#timsort-算法的-bug">Timsort 算法的 bug</a></h3>
 <p>Rust 中的实现并非默认的 Timsort 的算法，这是因为 Timsort 算法存在 bug(http://envisage-project.eu/timsort-specification-and-verification/)。Rust 的实现在 <code>collapse</code> 这个函数做了修改。</p>
-<p>可以比较 Java JDK1.8中对应的实现。Java的实现中只比较了栈顶3个元素，但 Rust 的现实比较了栈顶 4 个元素。</p>
+<p>Timsort 算法在 JDK1.7 中引入 Java，但在 1.8 版本仍未修复这个 bug。 比较 Java JDK1.8中对应的实现。Java的实现中只比较了栈顶3个元素，但 Rust 的现实比较了栈顶 4 个元素。</p>
 <pre><code class="language-java">private void mergeCollapse() {
     while (stackSize &gt; 1) {
         int n = stackSize - 2;
@@ -350,7 +350,7 @@ where
 <p>Timsort: https://github.com/python/cpython/blob/main/Objects/listsort.txt
 OpenJDK’s java.utils.Collection.sort() is broken: The good, the bad and the worst case: http://envisage-project.eu/timsort-specification-and-verification/
 Proving that Android’s, Java’s and Python’s sorting algorithm is broken (and showing how to fix it): http://www.envisage-project.eu/proving-android-java-and-python-sorting-algorithm-is-broken-and-how-to-fix-it/
-java bug track: https://bugs.openjdk.org/browse/JDK-8072909</p>
+Java bug track: https://bugs.openjdk.org/browse/JDK-8072909</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="rust编译器"><a class="header" href="#rust编译器">Rust编译器</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="基础结构"><a class="header" href="#基础结构">基础结构</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="命令行解析"><a class="header" href="#命令行解析">命令行解析</a></h1>
