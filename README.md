@@ -32,6 +32,7 @@ KCLVM 是我们在 Kusion 这个项目中使用 Rust 开发的语言编译器，
 
 - [简介](intro/readme.md)
 - [标准库](stdlib/readme.md)
+  - [排序算法: Timsort 和 pdqsort](stdlib/sort/readme.md) &#x2705;
 - [Rust编译器](rustc/readme.md)
   - [概述](rustc/overview/readme.md)
   - [命令行解析](rustc/invocation/readme.md)
