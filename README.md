@@ -74,5 +74,7 @@ KCLVM 是我们在 Kusion 这个项目中使用 Rust 开发的语言编译器，
 
 [![Star History Chart](https://api.star-history.com/svg?repos=awesome-kusion/rust-code-book&type=Date)](https://star-history.com/#awesome-kusion/rust-code-book&Date)
 
-- 微信群:
-![wechat](wechat.png)
+欢迎通过以下方式联系我们:
+- Slack: https://join.slack.com/t/rustcodebook/shared_invite/zt-1htuqzkf9-45i6FO1L~ihwnmbGGh7QEw
+- Twitter: [He1pa](https://twitter.com/ZhengZh79945795)
+
